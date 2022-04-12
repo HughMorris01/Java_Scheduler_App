@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserHomeScreenController">
+   <children>
+      <Button alignment="CENTER" layoutX="76.0" layoutY="205.0" mnemonicParsing="false" onAction="#toCustomerScreen" prefHeight="70.0" prefWidth="347.0" style="-fx-background-radius: 45;" text="Customers ---&gt;">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER" layoutX="76.0" layoutY="319.0" mnemonicParsing="false" onAction="#toAppointmentScreen" prefHeight="70.0" prefWidth="347.0" style="-fx-background-radius: 45;" text="&lt;--- Appointments">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Button>
+      <Label layoutX="28.0" layoutY="33.0" prefHeight="18.0" prefWidth="63.0" text="User ID" />
+      <Label layoutX="28.0" layoutY="59.0" text="Login Timestamp" />
+   </children>
+</AnchorPane>

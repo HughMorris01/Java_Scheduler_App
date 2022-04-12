@@ -3,7 +3,7 @@ package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-/** A significant portion of the code for this class was pulled from the C195 Code Repository.
+/** Some code for this class was pulled from the C195 Code Repository.
  * This abstract class provides the interface between the Java program a MySQL database.
  * CONNECTOR VERSION: Connector/J 8.0.25
  * @author Greg Farrell

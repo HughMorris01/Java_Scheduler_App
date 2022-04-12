@@ -3,10 +3,17 @@ package controller;
 import database.DBCountries;
 import database.DBCustomers;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.Country;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -44,11 +51,15 @@ public class MainScreenController implements Initializable {
         }
     }
     */
-    public static String userName;
-    public static String password;
 
-    public void getUserPass() {
+    public void loginValidation(ActionEvent actionEvent) throws IOException {
         String enteredName = userIdTextField.getText();
         String enteredPassword = passwordTextField.getText();
+
+        Parent root = FXMLLoader.load(getClass().getResource("/view/UserHomeScreen.fxml"));
+        Stage stage = (Stage) ((Node) (actionEvent.getSource())).getScene().getWindow();
+        Scene scene = new Scene(root, 500, 500);
+        stage.setScene(scene);
+        stage.setTitle("User Home Screen");
     }
 }
