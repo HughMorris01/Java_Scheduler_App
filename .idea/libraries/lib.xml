@@ -1,13 +1,11 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
-      <root url="file://$PATH_TO_FX17.0.2$" />
       <root url="jar://$PROJECT_DIR$/../../../../../../../../Program Files/Java/mysql-connector-java-8.0.25/mysql-connector-java-8.0.25.jar!/" />
-      <root url="file://$PATH_TO_FX17.0.2$" />
+      <root url="file://$PATH_TO_FX$" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://$PATH_TO_FX17.0.2$" recursive="false" />
-    <jarDirectory url="file://$PATH_TO_FX17.0.2$" recursive="false" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
   </library>
 </component>

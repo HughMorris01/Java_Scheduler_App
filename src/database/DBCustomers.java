@@ -1,10 +1,20 @@
 package database;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import model.Customer;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DBCustomers {
+
+    private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+
+    public static ObservableList<Customer> getAllCustomers() {
+        return allCustomers;
+    }
 
     public static int insertCustomer(String name, String address, int divisionId) throws SQLException {
 
@@ -13,8 +23,7 @@ public class DBCustomers {
         ps.setString(1, name);
         ps.setString(2, address);
         ps.setInt(3, divisionId);
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
+        return ps.executeUpdate();
     }
 
     public static int updateCustomer(int customerId, String updatedName) throws SQLException {
@@ -22,16 +31,14 @@ public class DBCustomers {
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sqlCommand);
         ps.setString(1, updatedName);
         ps.setInt(2, customerId);
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
+        return ps.executeUpdate();
     }
 
     public static int deleteCustomer(int customerId) throws SQLException {
         String sqlCommand = "DELETE FROM customers WHERE Customer_ID = ? ";
         PreparedStatement ps = JDBC.getConnection().prepareStatement(sqlCommand);
         ps.setInt(1, customerId);
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
+        return ps.executeUpdate();
     }
 
     public static void selectCustomers() throws SQLException {
