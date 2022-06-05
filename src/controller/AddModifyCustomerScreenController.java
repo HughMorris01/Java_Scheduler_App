@@ -155,6 +155,8 @@ public class AddModifyCustomerScreenController implements Initializable {
 
            DBCustomers.updateCustomer(customerId, customerName, address, postalCode, phone, divisionId);
 
+           tempCustomer = null;
+
            Parent root = FXMLLoader.load(getClass().getResource("/view/CustomerScreen.fxml"));
            Stage stage = (Stage) ((Node) (actionEvent.getSource())).getScene().getWindow();
            Scene scene = new Scene(root, 600, 450);

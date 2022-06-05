@@ -5,7 +5,7 @@
 
 <AnchorPane prefHeight="450.0" prefWidth="1050.0" stylesheets="@../main/styles.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentScreenController">
    <children>
-      <TableView id="appointmentsTable" fx:id="appointmentsTable" layoutX="25.0" layoutY="102.0" prefHeight="222.0" prefWidth="1000.0">
+      <TableView id="appointmentsTable" fx:id="appointmentsTable" layoutX="25.0" layoutY="120.0" prefHeight="204.0" prefWidth="1000.0">
         <columns>
           <TableColumn fx:id="appointmentIdCol" prefWidth="58.39999580383301" text="Appt. ID" />
             <TableColumn fx:id="startDateCol" prefWidth="90.0" text="Date" />
@@ -30,6 +30,8 @@
          </toggleGroup>
       </RadioButton>
       <RadioButton layoutX="420.0" layoutY="46.0" mnemonicParsing="false" onAction="#loadWeeklySchedule" text="This Week's Schedule" toggleGroup="$scheduleToggle" />
-      <RadioButton layoutX="145.0" layoutY="46.0" mnemonicParsing="false" onAction="#loadAllAppointments" selected="true" text="All Appointments" toggleGroup="$scheduleToggle" />
+      <RadioButton layoutX="145.0" layoutY="46.0" mnemonicParsing="false" onAction="#loadAllAppointments" selected="true" text="All Upcoming Appointments" toggleGroup="$scheduleToggle" />
+      <ComboBox fx:id="contactComboBox" layoutX="179.0" layoutY="77.0" onAction="#onSelectContact" prefWidth="150.0" />
+      <Label layoutX="84.0" layoutY="81.0" text="Sort by Contact" />
    </children>
 </AnchorPane>

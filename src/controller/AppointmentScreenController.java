@@ -1,6 +1,7 @@
 package controller;
 
 import database.DBAppointments;
+import database.DBContacts;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
+import model.Contact;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,6 +27,7 @@ import java.util.ResourceBundle;
 */
 public class AppointmentScreenController implements Initializable {
     public ToggleGroup scheduleToggle;
+    public ComboBox<Contact> contactComboBox;
     public TableView<Appointment> appointmentsTable;
     public TableColumn<Appointment, Integer> appointmentIdCol;
     public TableColumn <Appointment, String> startDateCol;
@@ -37,7 +40,6 @@ public class AppointmentScreenController implements Initializable {
     public TableColumn <Appointment, Integer>customerIdCol;
     public TableColumn <Appointment, String> contactNameCol;
     public TableColumn <Appointment, Integer> userIdCol;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,6 +56,7 @@ public class AppointmentScreenController implements Initializable {
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
         appointmentsTable.setItems(DBAppointments.getAllAppointments());
 
+        contactComboBox.setItems(DBContacts.getAllContacts());
     }
 
     public void toUserHome(ActionEvent actionEvent) throws IOException {
@@ -110,7 +113,7 @@ public class AppointmentScreenController implements Initializable {
 
                 Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
                 alert1.setTitle("Deletion Confirmation");
-                alert1.setContentText("The Selected Appointment ID#" + appointmentId + " of Type \"" + type +  "\" Has Been Deleted");
+                alert1.setContentText("The Selected Appointment ID#" + appointmentId + " of Type " + type +  " Has Been Deleted");
                 alert1.show();
             }
         }
@@ -132,5 +135,10 @@ public class AppointmentScreenController implements Initializable {
 
     public void loadAllAppointments(ActionEvent actionEvent) {
         appointmentsTable.setItems(DBAppointments.getAllAppointments());
+    }
+
+    public void onSelectContact(ActionEvent actionEvent) {
+        Contact selectedContact = contactComboBox.getSelectionModel().getSelectedItem();
+        appointmentsTable.setItems(DBAppointments.getAppointmentsByContact(selectedContact));
     }
 }

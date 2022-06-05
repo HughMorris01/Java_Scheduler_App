@@ -1,17 +1,29 @@
 package controller;
 
+import database.DBAppointments;
+import database.DBCountries;
+import database.DBFirst_Level_Divisions;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Appointment;
+import model.Division;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -19,6 +31,13 @@ public class UserHomeScreenController implements Initializable {
 
     public Label loginTimeTextField;
     public Label userName;
+    public ComboBox<String> typeComboBox;
+    public ComboBox<Month> monthComboBox;
+    public TextField outputBox;
+    private static boolean initialLogin = true;
+    public ComboBox<Division> locationComboBox;
+    public ComboBox<Month> monthComboBox2;
+    public TextField outputBox2;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -27,8 +46,67 @@ public class UserHomeScreenController implements Initializable {
         String loginTimeString = dtf.format(loginSuccess);
         loginTimeTextField.setText(loginTimeString);
         userName.setText(MainScreenController.getUser().getUserName());
+        ObservableList<String> typeStrings = FXCollections.observableArrayList();
+        typeStrings.add("In-Person");
+        typeStrings.add("Remote");
+        typeStrings.add("Group Session");
+        typeComboBox.setItems(typeStrings);
+        locationComboBox.setItems(DBFirst_Level_Divisions.getAllDivisions());
+        ObservableList<Month> months = FXCollections.observableArrayList();
+        Month month1 = Month.JANUARY;
+        months.add(month1);
+        Month month2 = Month.FEBRUARY;
+        months.add(month2);
+        Month month3 = Month.MARCH;
+        months.add(month3);
+        Month month4 = Month.APRIL;
+        months.add(month4);
+        Month month5 = Month.MAY;
+        months.add(month5);
+        Month month6 = Month.JUNE;
+        months.add(month6);
+        Month month7 = Month.JULY;
+        months.add(month7);
+        Month month8 = Month.AUGUST;
+        months.add(month8);
+        Month month9 = Month.SEPTEMBER;
+        months.add(month9);
+        Month month10 = Month.OCTOBER;
+        months.add(month10);
+        Month month11 = Month.NOVEMBER;
+        months.add(month11);
+        Month month12 = Month.DECEMBER;
+        months.add(month12);
+        monthComboBox.setItems(months);
+        monthComboBox2.setItems(months);
 
-    }
+
+        // Provide alert if an upcoming appointment is within the next 15 minutes of local time.
+        if(initialLogin) {
+            ObservableList<Appointment> everyAppointment = DBAppointments.getEveryAppointment();
+            for(int i = 0; i < everyAppointment.size(); i++) {
+                Appointment tempAppointment = everyAppointment.get(i);
+                if (tempAppointment.getStart().isBefore(loginSuccess.plusMinutes(15)) && tempAppointment.getStart().isAfter(loginSuccess)) {
+                    initialLogin = false;
+                    int appointmentId = everyAppointment.get(i).getAppointmentId();
+                    String appointmentDate = everyAppointment.get(i).getStartDateString();
+                    String appointmentTime = everyAppointment.get(i).getStartTimeString();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Upcoming Appointment");
+                    alert.setContentText(appointmentDate + "\nAppointment ID#" + appointmentId + " starts at " + appointmentTime + ".");
+                    alert.show();
+                    return;
+                }
+            }
+        }
+            if(initialLogin) {
+                initialLogin = false;
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("No Upcoming Appointments");
+                alert.setContentText("There are no appointments in the next 15 minutes.");
+                alert.show();
+            }
+        }
     /** This method is an event handler on the Customer.
      * When clicked, the button loads and redirects the program to the Customer Screen FXML document.
      * @param actionEvent Passed from the On Action event listener in the User Home Screen FXML document
@@ -50,5 +128,47 @@ public class UserHomeScreenController implements Initializable {
             stage.setScene(scene);
             stage.setTitle("Appointment Screen");
             stage.show();
+    }
+
+    public void onSubmit(ActionEvent actionEvent) {
+        Month selectedMonth = monthComboBox.getSelectionModel().getSelectedItem();
+        if(selectedMonth == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No Month Selected");
+            alert.setContentText("Please select a month before computing");
+            alert.show();
+            return;
+        }
+        String selectedType = typeComboBox.getSelectionModel().getSelectedItem();
+        if(selectedType == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No Type Selected");
+            alert.setContentText("Please select a type before computing");
+            alert.show();
+            return;
+        }
+        ObservableList<Appointment> reportAppointments = DBAppointments.getAppointmentsByMonthAndType(selectedType, selectedMonth);
+        outputBox.setText(String.valueOf(reportAppointments.size()));
+    }
+
+    public void onSubmit2(ActionEvent actionEvent) {
+        Month selectedMonth = monthComboBox2.getSelectionModel().getSelectedItem();
+        if(selectedMonth == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No Month Selected");
+            alert.setContentText("Please select a month before computing");
+            alert.show();
+            return;
+        }
+        Division selectedDivision = locationComboBox.getSelectionModel().getSelectedItem();
+        if(selectedDivision == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No Location Selected");
+            alert.setContentText("Please select a location before computing");
+            alert.show();
+            return;
+        }
+        ObservableList<Appointment> reportAppointments = DBAppointments.getAppointmentsByMonthAndLocation(selectedDivision, selectedMonth);
+        outputBox2.setText(String.valueOf(reportAppointments.size()));
     }
 }

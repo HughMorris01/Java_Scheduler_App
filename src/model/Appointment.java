@@ -46,6 +46,7 @@ public class Appointment {
         setContactId(contactId);
     }
 
+    // Setter Functions
     public void setAppointmentId(int appointmentId) { this.appointmentId = appointmentId; }
     public void setTitle(String title) { this.title = title; }
     public void setDescription(String description) { this.description = description; }
@@ -90,6 +91,7 @@ public class Appointment {
         }
     }
 
+    // Getter Functions
     public int getAppointmentId() { return appointmentId; }
     public LocalDateTime getStart() { return start; }
     public String getStartDateString() {return startDateString; }
@@ -98,9 +100,7 @@ public class Appointment {
     public String getEndTimeString() { return endTimeString; }
     public String getTitle() { return title; }
     public String getDescription() { return description; }
-    public String getLocation() {
-
-        return this.customer.getDivision().getDivisionName(); }
+    public String getLocation() { return this.customer.getDivision().getDivisionName(); }
     public String getType() { return type; }
     public Customer getCustomer() { return customer; }
     public int getCustomerId() { return customerId; }

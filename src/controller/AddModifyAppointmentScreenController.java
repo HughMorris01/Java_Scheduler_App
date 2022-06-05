@@ -40,6 +40,7 @@ public class AddModifyAppointmentScreenController implements Initializable {
     public TextField titleTextField;
     public TextField locationTextField;
     public TextField descriptionTextField;
+    public ComboBox<String> typeComboBox;
     public TextField typeTextField;
     public static Appointment tempAppointment = null;
 
@@ -47,13 +48,19 @@ public class AddModifyAppointmentScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (isNewAppointment) { screenLabel.setText("Enter New Appointment");
+        if (isNewAppointment) { screenLabel.setText("Enter Appointment Information");
         submitButton.setText("Confirm Appointment");}
         else {screenLabel.setText("Update Existing Appointment");
         submitButton.setText("Save Changes");}
 
+        ObservableList<String> types = FXCollections.observableArrayList();
+        types.add("In-Person");
+        types.add("Remote");
+        types.add("Group Session");
+
         customerComboBox.setItems(DBCustomers.getAllCustomers());
         contactComboBox.setItems(DBContacts.getAllContacts());
+        typeComboBox.setItems(types);
         userIdTextField.setText(Integer.toString(MainScreenController.getUser().getUserId()));
 
         if (tempAppointment != null) {
@@ -66,7 +73,7 @@ public class AddModifyAppointmentScreenController implements Initializable {
             titleTextField.setText(tempAppointment.getTitle());
             descriptionTextField.setText(tempAppointment.getDescription());
             locationTextField.setText(tempAppointment.getLocation());
-            typeTextField.setText(tempAppointment.getType());
+            typeComboBox.setValue(tempAppointment.getType());
             contactComboBox.setValue(tempAppointment.getContact());
         }
         else {
@@ -79,7 +86,7 @@ public class AddModifyAppointmentScreenController implements Initializable {
             titleTextField.setText(null);
             descriptionTextField.setText(null);
             locationTextField.setText(null);
-            typeTextField.setText(null);
+            typeComboBox.setValue(null);
             contactComboBox.setValue(null);
         }
 
@@ -145,10 +152,10 @@ public class AddModifyAppointmentScreenController implements Initializable {
             ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
             ZonedDateTime zonedDateTimeStart = ZonedDateTime.of(localDateTimeStart, localZoneId);
             ZonedDateTime businessHoursStart = ZonedDateTime.of(localDate, LocalTime.of(8, 00), ZoneId.of("US/Eastern"));
-            if(zonedDateTimeStart.isBefore(businessHoursStart)) {
+            if((zonedDateTimeStart.isBefore(businessHoursStart)) || (zonedDateTimeStart.getDayOfWeek() == DayOfWeek.SATURDAY) || (zonedDateTimeStart.getDayOfWeek() == DayOfWeek.SUNDAY)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Outside Business Hours");
-                alert.setContentText("Please Select a Start Time that is After 8:00am EST");
+                alert.setContentText("Please Select a Start Time that is After 8:00am EST, M-F");
                 alert.show();
                 return;
             }
@@ -207,7 +214,7 @@ public class AddModifyAppointmentScreenController implements Initializable {
                 return;
             }
             String location = locationTextField.getText();
-            String type = typeTextField.getText();
+            String type = typeComboBox.getSelectionModel().getSelectedItem();
             if (type == null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Blank Field");
@@ -274,10 +281,10 @@ public class AddModifyAppointmentScreenController implements Initializable {
             ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
             ZonedDateTime zonedDateTimeStart = ZonedDateTime.of(localDateTimeStart, localZoneId);
             ZonedDateTime businessHoursStart = ZonedDateTime.of(localDate, LocalTime.of(8, 00), ZoneId.of("US/Eastern"));
-            if(zonedDateTimeStart.isBefore(businessHoursStart)) {
+            if((zonedDateTimeStart.isBefore(businessHoursStart)) || (zonedDateTimeStart.getDayOfWeek() == DayOfWeek.SATURDAY) || (zonedDateTimeStart.getDayOfWeek() == DayOfWeek.SUNDAY)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Outside Business Hours");
-                alert.setContentText("Please Select a Start Time that is After 8:00am EST");
+                alert.setContentText("Please Select a Start Time that is After 8:00am EST, M-F");
                 alert.show();
                 return;
             }
@@ -339,7 +346,7 @@ public class AddModifyAppointmentScreenController implements Initializable {
                 return;
             }
             String location = locationTextField.getText();
-            String type = typeTextField.getText();
+            String type = typeComboBox.getSelectionModel().getSelectedItem();
             if (type == "") {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Blank Field");
@@ -359,6 +366,8 @@ public class AddModifyAppointmentScreenController implements Initializable {
             int userId = Integer.parseInt(userIdTextField.getText());
 
             DBAppointments.updateAppointment(title, description, location, type, timeStampStart, timeStampEnd, customerId, contactId, userId, appointmentId);
+
+            tempAppointment = null;
 
             Parent root = FXMLLoader.load(getClass().getResource("/view/AppointmentScreen.fxml"));
             Stage stage = (Stage) ((Node) (actionEvent.getSource())).getScene().getWindow();
