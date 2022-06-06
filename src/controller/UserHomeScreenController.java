@@ -18,27 +18,47 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.Division;
-
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/** This is the controller class for the UserHomeScreen.fxml document and is not meant to be instantiated.
+ *  This class provides the functionality to the two reports contained on the screen, as well as the buttons that redirect
+ *  to the Customer and Appointment screens.
+ * @author Gregory Farrell
+ * @version 1.0
+ * */
 public class UserHomeScreenController implements Initializable {
 
+    /** Label that displays the User's login time. */
     public Label loginTimeTextField;
+    /** Label that displays the User's username. */
     public Label userName;
+    /** ComboBox listing the appointment Types. */
     public ComboBox<String> typeComboBox;
+    /** ComboBox listing months of the year. */
     public ComboBox<Month> monthComboBox;
+    /** Output TextField for the first report. */
     public TextField outputBox;
-    private static boolean initialLogin = true;
+    /** ComboBox listing appointment locations. */
     public ComboBox<Division> locationComboBox;
+    /** ComboBox listing months of the year. */
     public ComboBox<Month> monthComboBox2;
+    /** Output TextField for the second report. */
     public TextField outputBox2;
+    /** Boolean to track if this is the User's initial login for the purpose of showing the alert about upcoming appointments. */
+    private static boolean initialLogin = true;
 
+    /** This method is called by the FXMLLoader.load() call contained in the loginValidation() method of the MainScreenController class.
+     * The method displays an alert message advising the User if there is an appointment beginning within 15 minutes of the local time.
+     * It also populates the data for the combo boxes that are used on the screen to run reports and displays the User's
+     * name and login time.
+     * @param resourceBundle An unreferenced ResourceBundle object passed automatically
+     * @param url An unreferenced URL object passed automatically
+     * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         LocalDateTime loginSuccess = MainScreenController.getLoginTime();
@@ -107,9 +127,10 @@ public class UserHomeScreenController implements Initializable {
                 alert.show();
             }
         }
-    /** This method is an event handler on the Customer.
+
+    /** This method is an event handler on the Customers button.
      * When clicked, the button loads and redirects the program to the Customer Screen FXML document.
-     * @param actionEvent Passed from the On Action event listener in the User Home Screen FXML document
+     * @param actionEvent Passed from the On Action event listener on the Customers' button.
      * @throws IOException Exception gets thrown if load() cannot locate the FXML file
      * */
     public void toCustomerScreen(ActionEvent actionEvent) throws IOException {
@@ -121,6 +142,11 @@ public class UserHomeScreenController implements Initializable {
         stage.show();
     }
 
+    /** This method is an event handler on the Appointments button.
+     * When clicked, the button loads and redirects the program to the Appointment Screen FXML document.
+     * @param actionEvent Passed from the On Action event listener in the User Home Screen FXML document
+     * @throws IOException Exception gets thrown if load() cannot locate the FXML file
+     * */
     public void toAppointmentScreen(ActionEvent actionEvent) throws IOException {
             Parent root = FXMLLoader.load(getClass().getResource("/view/AppointmentScreen.fxml"));
             Stage stage = (Stage) ((Node) (actionEvent.getSource())).getScene().getWindow();
@@ -130,6 +156,11 @@ public class UserHomeScreenController implements Initializable {
             stage.show();
     }
 
+    /** This method is an event handler on the top Calculate button.
+     * When clicked, the button runs the report for the chosen criteria.
+     * @param actionEvent Passed from the On Action event listener on the top Calculate button.
+     * @throws IOException Exception gets thrown if load() cannot locate the FXML file
+     * */
     public void onSubmit(ActionEvent actionEvent) {
         Month selectedMonth = monthComboBox.getSelectionModel().getSelectedItem();
         if(selectedMonth == null) {
@@ -151,6 +182,11 @@ public class UserHomeScreenController implements Initializable {
         outputBox.setText(String.valueOf(reportAppointments.size()));
     }
 
+    /** This method is an event handler on the bottom Calculate button.
+     * When clicked, the button runs the report for the chosen criteria.
+     * @param actionEvent Passed from the On Action event listener on the bottom Calculate button.
+     * @throws IOException Exception gets thrown if load() cannot locate the FXML file
+     * */
     public void onSubmit2(ActionEvent actionEvent) {
         Month selectedMonth = monthComboBox2.getSelectionModel().getSelectedItem();
         if(selectedMonth == null) {

@@ -3,17 +3,18 @@ package database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Country;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
+/** This class is for manipulating the Country table data in the database and not mean to be instantiated.
+ * The class contains one method to return all Country data as ObservableList of Country objects.
+ * @version 1.0
+ */
 public class DBCountries {
-
-    // public static ObservableList<Country> allCountryList = FXCollections.observableArrayList();
-
+    /** This method is used to return all of the Country records in the database as an ObserveableList of Customer objects.
+     * @return An ObservableList of Country objects.
+     * */
     public static ObservableList<Country> getAllCountries() {
         ObservableList<Country> allCountryList = FXCollections.observableArrayList();
 
@@ -24,14 +25,8 @@ public class DBCountries {
             while (rs.next()) {
                 int countryId = rs.getInt("Country_ID");
                 String countryName = rs.getString("Country");
-                Timestamp cts = rs.getTimestamp("Create_Date");
-                LocalDateTime createdLdt = cts.toLocalDateTime();
-                String createdBy = rs.getString("Created_By");
-                Timestamp uts = rs.getTimestamp("Last_Update");
-                LocalDateTime updatedLdt = uts.toLocalDateTime();
-                String updatedBy = rs.getString("Last_Updated_By");
 
-                Country tempCountry = new Country(countryId, countryName, createdLdt, createdBy, updatedLdt, updatedBy );
+                Country tempCountry = new Country(countryId, countryName);
                 allCountryList.add(tempCountry);
             }
         }
@@ -43,17 +38,4 @@ public class DBCountries {
         return allCountryList;
     }
 
-    public static void checkDateTimeConversion() {
-        String sqlCommand = "SELECT Create_Date FROM countries";
-        try {
-            PreparedStatement ps = JDBC.getConnection().prepareStatement(sqlCommand);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Timestamp ts = rs.getTimestamp("Create_Date");
-                System.out.println("Create Date: " + ts.toLocalDateTime().toString());
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
 }

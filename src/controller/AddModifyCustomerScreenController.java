@@ -15,12 +15,18 @@ import javafx.stage.Stage;
 import model.Country;
 import model.Customer;
 import model.Division;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+
+/** This is the controller class for the AddModifyCustomerScreen.fxml document and is not meant to be instantiated.
+ * The class will either load the form with Customer data passed from the previous CustomerScreen or will begin as blank
+ * text fields and combo boxes for the User to enter the Customer data into.
+ * @author Gregory Farrell
+ * @version 1.0
+ * */
 public class AddModifyCustomerScreenController implements Initializable {
     /** Static Customer member used to receive a Customer object passed from the Customers table */
     public static Customer tempCustomer = null;
@@ -28,18 +34,33 @@ public class AddModifyCustomerScreenController implements Initializable {
     public static int tempCustomerIndex;
     /** Static boolean used to toggle the heading label on the screen */
     public static boolean labelBoolean = false;
-    /** Heading label that adjusts depending on if it is a new or existing customer being entered */
+    /** Heading Label that adjusts depending on if it is a new or existing customer being entered */
     public Label screenLabel;
+    /** Disabled TextField used to display the Customer ID, if available. */
     public TextField customerIdTextField;
+    /** TextField used to enter and display the Customer name. */
     public TextField customerNameTextField;
+    /** TextField used to enter and display the Customer address. */
     public TextField addressTextField;
+    /** TextField used to enter and display the Customer postal code. */
     public TextField postalCodeTextField;
+    /** TextField used to enter and display the Customer phone number. */
     public TextField phoneNumberTextField;
+    /** ComboBox used to select the Customer's Country. */
     public ComboBox<Country> countryComboBox;
+    /** ComboBox used to select the Customer's Division. */
     public ComboBox<Division> divisionComboBox;
     public ObservableList<Country> localCountryList;
+    /** Button that saves the Customer info to the database. */
     public Button submitButton;
 
+    /** This method is called by the FXMLLoader.load() call contained in either the addCustomer() or modifyCustomer() methods of the
+     * CustomerScreenController class.
+     * If modifying a Customer record, the selected Customer's data is passed from the previous screen into the text fields,
+     * otherwise they load blank.
+     * @param resourceBundle An unreferenced ResourceBundle object passed automatically
+     * @param url An unreferenced URL object passed automatically
+     * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (!labelBoolean) {
@@ -83,7 +104,12 @@ public class AddModifyCustomerScreenController implements Initializable {
         }
     }
 
-
+    /** This method is an event handler for the Back button that sends the program back to the CustomerScreen.
+     * The method loads the FXML document for the CustomerScreen, passes that to a new scene and then sets the
+     * stage with the new scene.
+     * @param actionEvent Passed from the On Action event listener on the Back button.
+     * @throws IOException The FXMLLoader.load() call will throw this exception if the FXML document can't be found.
+     */
     public void toCustomerScreen(ActionEvent actionEvent) throws IOException {
         tempCustomer = null;
 
@@ -95,6 +121,10 @@ public class AddModifyCustomerScreenController implements Initializable {
         stage.show();
     }
 
+    /** This method is an event handler for the Country combo box.
+     * The method loads the data for the Division combo box, determined by the Country selection.
+     * @param actionEvent Passed from the On Action event listener on the Country combo box.
+     */
     public void onCountrySelect(ActionEvent actionEvent) {
             Country selectedCountry = countryComboBox.getSelectionModel().getSelectedItem();
             if (selectedCountry.getCountryId() == 1) {
@@ -117,6 +147,14 @@ public class AddModifyCustomerScreenController implements Initializable {
             }
         }
 
+    /** This method is an event handler for the Save button that saves the entered Customer data to the database and redirects
+     * the application back to the CustomerScreen.
+     * The method gathers the data from the form, executes the SQL to update the database and then loads the FXML document
+     * for the CustomerScreen.
+     * @param actionEvent Passed from the On Action event listener on the Save button.
+     * @throws IOException The FXMLLoader.load() call will throw this exception if the FXML document can't be found.
+     * @throws SQLException This execution will be thrown if the SQL does not execute properly.
+     */
     public void onSubmitButtonClick(ActionEvent actionEvent) throws SQLException, IOException {
 
         if (customerIdTextField.getText() == "") {

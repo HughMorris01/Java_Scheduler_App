@@ -1,43 +1,46 @@
 package model;
 
-import java.time.LocalDateTime;
-
+/** This is the class for creating objects representing Countries that exist in the database.
+ *  Each Country has a name and an ID.
+ * @author Gregory Farrell
+ * @version 1.0
+ */
 public class Country {
-    // Instance Variables
+    /** CountryId as an int. */
     private int countryId;
+    /** CountryName as an string. */
     private String countryName;
-    private LocalDateTime createDate;
-    private String createdBy;
-    private LocalDateTime lastUpdate;
-    private String lastUpdatedBy;
 
-    // Constructor
-    public Country(int countryId, String countryName, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy) {
+    /** Constructor for instantiating Country objects.
+     * @param countryId countryId as an int.
+     * @param countryName countryName as a string.
+     * */
+    public Country(int countryId, String countryName) {
         setCountryId(countryId);
         setCountryName(countryName);
-        setCreateDate(createDate);
-        setCreatedBy(createdBy);
-        setLastUpdate(lastUpdate);
-        setLastUpdatedBy(lastUpdatedBy);
     }
 
-    // Setter Functions
+    /** Method sets the countryId field.
+     * @param countryId  countryId as an int.
+     * */
     public void setCountryId(int countryId) { this.countryId = countryId; }
+    /** Method sets the countryName field.
+     * @param countryName countryName as a string.
+     * */
     public void setCountryName(String countryName) { this.countryName = countryName; }
-    public void setCreateDate(LocalDateTime createDate) { this.createDate = createDate; }
-    public void setCreatedBy(String createdBy) { this.createdBy = createdBy; }
-    public void setLastUpdate(LocalDateTime lastUpdate) { this.lastUpdate = lastUpdate; }
-    public void setLastUpdatedBy(String lastUpdatedBy) { this.lastUpdatedBy = lastUpdatedBy; }
 
-    // Getter Functions
+    /** Method returns the countryId field.
+     * @return countryId as an int.
+     * */
     public int getCountryId() { return countryId; }
+    /** Method returns the countryName field.
+     * @return countryName as a string.
+     * */
     public String getCountryName() { return countryName; }
-    public LocalDateTime getCreateDate() { return createDate; }
-    public String getCreatedBy() { return createdBy; }
-    public LocalDateTime getLastUpdate() { return lastUpdate; }
-    public String getLastUpdatedBy() { return lastUpdatedBy; }
 
-    public String toString() {
-        return getCountryName();
-    }
+    /** Method overrides the inherited toString() method to return the countryName field.
+     * @return countryName as a string.
+     */
+    @Override
+    public String toString() { return getCountryName(); }
 }

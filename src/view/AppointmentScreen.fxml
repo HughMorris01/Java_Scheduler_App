@@ -24,12 +24,12 @@
       <Button layoutX="893.0" layoutY="345.0" mnemonicParsing="false" onAction="#onDeleteAppointment" prefHeight="30.0" prefWidth="130.0" text="Delete Appointment" />
       <Button layoutX="717.0" layoutY="345.0" mnemonicParsing="false" onAction="#onUpdateAppointment" prefHeight="30.0" prefWidth="130.0" text="Update Appointment" />
       <Button layoutX="15.0" layoutY="412.0" mnemonicParsing="false" onAction="#toUserHome" text="&lt;== Back" />
-      <RadioButton layoutX="681.0" layoutY="46.0" mnemonicParsing="false" onAction="#loadMonthlySchedule" text="This Month's Schedule">
+      <RadioButton layoutX="681.0" layoutY="46.0" mnemonicParsing="false" onAction="#loadMonthlySchedule" text="Appointments in the Next Month">
          <toggleGroup>
             <ToggleGroup fx:id="scheduleToggle" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton layoutX="420.0" layoutY="46.0" mnemonicParsing="false" onAction="#loadWeeklySchedule" text="This Week's Schedule" toggleGroup="$scheduleToggle" />
+      <RadioButton layoutX="420.0" layoutY="46.0" mnemonicParsing="false" onAction="#loadWeeklySchedule" text="Appointment in the Next Week" toggleGroup="$scheduleToggle" />
       <RadioButton layoutX="145.0" layoutY="46.0" mnemonicParsing="false" onAction="#loadAllAppointments" selected="true" text="All Upcoming Appointments" toggleGroup="$scheduleToggle" />
       <ComboBox fx:id="contactComboBox" layoutX="179.0" layoutY="77.0" onAction="#onSelectContact" prefWidth="150.0" />
       <Label layoutX="84.0" layoutY="81.0" text="Sort by Contact" />

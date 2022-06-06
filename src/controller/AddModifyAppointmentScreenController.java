@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import model.Appointment;
 import model.Contact;
 import model.Customer;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -26,26 +25,52 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
+/** This is the controller class for the AddModifyAppointmentScreen.fxml document and is not meant to be instantiated.
+ * The class will either load the form with Appointment data passed from the previous AppointmentScreen or will begin as blank
+ * text fields and combo boxes for the User to enter the Appointment data into.
+ * @author Gregory Farrell
+ * @version 1.0
+ * */
 public class AddModifyAppointmentScreenController implements Initializable {
+    /** Label used to display if it will be a new or existing Appointment. */
     public Label screenLabel;
+    /** Button used to gather the entered information and update the database. */
     public Button submitButton;
+    /** Boolean used to track if it will be a new or existing Appointment. */
     public static boolean isNewAppointment = false;
+    /** ComboBox populated with the Contacts from the database. */
     public ComboBox<Contact> contactComboBox;
+    /** ComboBox populated with the Customers from the database. */
     public ComboBox<Customer> customerComboBox;
+    /** Disabled TextField that displays the Appointment ID, if appropriate. */
     public TextField appointmentIdTextField;
+    /** Disabled TextField that displays the User ID. */
     public TextField userIdTextField;
+    /** DatePicker for selecting the date. */
     public DatePicker datePickerComboBox;
+    /** ComboBox populated with potential starting times. */
     public ComboBox<String> startTimeComboBox;
+    /** ComboBox populated with potential ending times. */
     public ComboBox<String> endTimeComboBox;
+    /** TextField for entering the Appointment title. */
     public TextField titleTextField;
+    /** Disabled TextField for entering the Appointment location. */
     public TextField locationTextField;
+    /** TextField for entering the Appointment description. */
     public TextField descriptionTextField;
+    /** ComboBox populated with Appointment types. */
     public ComboBox<String> typeComboBox;
-    public TextField typeTextField;
+    /** Static member used to pass a selected Appointment from the previous screen. */
     public static Appointment tempAppointment = null;
 
 
-
+    /** This method is called by the FXMLLoader.load() call contained in either the onNewAppointment() or onUpdateAppointment() methods of the
+     * AppointmentScreenController class.
+     * If modifying an Appointment record, the selected Appointment's data is passed from the previous screen into the text fields
+     * and combo boxes, otherwise they load blank.
+     * @param resourceBundle An unreferenced ResourceBundle object passed automatically
+     * @param url An unreferenced URL object passed automatically
+     * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (isNewAppointment) { screenLabel.setText("Enter Appointment Information");
@@ -100,16 +125,60 @@ public class AddModifyAppointmentScreenController implements Initializable {
         startTimeComboBox.setItems(startTimes);
     }
 
-    public void toBack(ActionEvent actionEvent) throws IOException {
-        tempAppointment = null;
-
-        Parent root = FXMLLoader.load(getClass().getResource("/view/AppointmentScreen.fxml"));
-        Stage stage = (Stage) ((Node) (actionEvent.getSource())).getScene().getWindow();
-        Scene scene = new Scene(root, 1050, 450);
-        stage.setScene(scene);
-        stage.setTitle("Appointment Screen");
+    /** This method is an event handler for the Customer combo box.
+     * Upon selection of a Customer, the disabled location text field is populated automatically with the Customer's location.
+     * @param actionEvent Passed from the On Action event listener on the Customer combo box.
+     */
+    public void onCustomerSelect(ActionEvent actionEvent) {
+        Customer selectedCustomer = customerComboBox.getSelectionModel().getSelectedItem();
+        locationTextField.setText(selectedCustomer.getDivision().getDivisionName());
     }
 
+    /** This method is an event handler for the Start Time combo box.
+     * The method loads the data for End Time combo box so that no end times are entered that are not after the start time.
+     * @param actionEvent Passed from the On Action event listener on the Start Time combo box.
+     */
+    public void onStartTime(ActionEvent actionEvent) {
+        String startTimeString = startTimeComboBox.getSelectionModel().getSelectedItem();
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
+        LocalTime localStartTime = LocalTime.from(timeFormatter.parse(startTimeString));
+        ObservableList<String> endTimes = FXCollections.observableArrayList();
+        while(localStartTime.isBefore(LocalTime.of(22,0))) {
+            localStartTime = localStartTime.plusMinutes(15);
+            String t1 = localStartTime.format(DateTimeFormatter.ofPattern("h:mm a"));
+            endTimes.add(t1);
+        }
+        endTimeComboBox.setItems(endTimes);
+        endTimeComboBox.setValue(null);
+        endTimeComboBox.setDisable(false);
+    }
+
+    /** This overloaded method loads the End Times combo box with potential end times, based on the start time that was
+     * passed from the selected Appointment. */
+    public void onStartTime() {
+        String start = startTimeComboBox.getSelectionModel().getSelectedItem();
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
+        LocalTime lt = LocalTime.from(timeFormatter.parse(start));
+
+        ObservableList<String> endTimes = FXCollections.observableArrayList();
+        while(lt.isBefore(LocalTime.of(22,0))) {
+            lt = lt.plusMinutes(15);
+            String t1 = lt.format(DateTimeFormatter.ofPattern("h:mm a"));
+            endTimes.add(t1);
+        }
+        endTimeComboBox.setItems(endTimes);
+        endTimeComboBox.setValue(null);
+        endTimeComboBox.setDisable(false);
+    }
+
+    /** This method is an event handler for the Save button that saves the entered Appointment data to the database and redirects
+     * the application back to the AppointmentScreen.
+     * The method gathers the data from the form, executes the SQL to update the database and then loads the FXML document
+     * for the AppointmentScreen.
+     * @param actionEvent Passed from the On Action event listener on the Save button.
+     * @throws IOException The FXMLLoader.load() call will throw this exception if the FXML document can't be found.
+     * @throws SQLException This execution will be thrown if the SQL does not execute properly.
+     */
     public void onSubmit(ActionEvent actionEvent) throws IOException, SQLException {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
         ObservableList<Appointment> localCustomerAppointments;
@@ -377,42 +446,19 @@ public class AddModifyAppointmentScreenController implements Initializable {
         }
     }
 
-    public void onCustomerSelect(ActionEvent actionEvent) {
-        Customer selectedCustomer = customerComboBox.getSelectionModel().getSelectedItem();
-        locationTextField.setText(selectedCustomer.getDivision().getDivisionName());
+    /** This method is an event handler for the Back button that sends the program back to the AppointmentScreen.
+     * The method loads the FXML document for the AppointmentScreen, passes that to a new scene and then sets the
+     * stage with the new scene.
+     * @param actionEvent Passed from the On Action event listener on the Back button.
+     * @throws IOException The FXMLLoader.load() call will throw this exception if the FXML document can't be found.
+     */
+    public void toBack(ActionEvent actionEvent) throws IOException {
+        tempAppointment = null;
+
+        Parent root = FXMLLoader.load(getClass().getResource("/view/AppointmentScreen.fxml"));
+        Stage stage = (Stage) ((Node) (actionEvent.getSource())).getScene().getWindow();
+        Scene scene = new Scene(root, 1050, 450);
+        stage.setScene(scene);
+        stage.setTitle("Appointment Screen");
     }
-
-    public void onStartTime(ActionEvent actionEvent) {
-        String startTimeString = startTimeComboBox.getSelectionModel().getSelectedItem();
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
-        LocalTime localStartTime = LocalTime.from(timeFormatter.parse(startTimeString));
-        ObservableList<String> endTimes = FXCollections.observableArrayList();
-        int i = 0;
-        while(localStartTime.isBefore(LocalTime.of(22,0))) {
-            localStartTime = localStartTime.plusMinutes(15);
-            String t1 = localStartTime.format(DateTimeFormatter.ofPattern("h:mm a"));
-            endTimes.add(t1);
-        }
-        endTimeComboBox.setItems(endTimes);
-        endTimeComboBox.setValue(null);
-        endTimeComboBox.setDisable(false);
-
-    }
-
-    public void onStartTime() {
-        String start = startTimeComboBox.getSelectionModel().getSelectedItem();
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
-        LocalTime lt = LocalTime.from(timeFormatter.parse(start));
-
-        ObservableList<String> endTimes = FXCollections.observableArrayList();
-        while(lt.isBefore(LocalTime.of(22,0))) {
-            lt = lt.plusMinutes(15);
-            String t1 = lt.format(DateTimeFormatter.ofPattern("h:mm a"));
-            endTimes.add(t1);
-        }
-        endTimeComboBox.setItems(endTimes);
-        endTimeComboBox.setValue(null);
-        endTimeComboBox.setDisable(false);
-    }
-
 }

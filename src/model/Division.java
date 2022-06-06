@@ -2,41 +2,28 @@ package model;
 
 import database.DBCountries;
 
-import java.time.LocalDateTime;
-
+/** This is the class for creating objects representing Divisions that exist in the database.
+ *  Each Division has an ID, name, Country, and CountryId.
+ * @author Gregory Farrell
+ * @version 1.0
+ */
 public class Division {
+    /** DivisionId as an int. */
     private int divisionId;
+    /** Division name as a string. */
     private String divisionName;
-    private LocalDateTime createDate;
-    private String createdBy;
-    private LocalDateTime lastUpdate;
-    private String lastUpdatedBy;
+    /** Country object that belongs to each Division object. */
     private Country country;
+    /** CountryId as an int. */
     private int countryId;
 
-    public Division(int divisionId, String divisionName, LocalDateTime createDate, String createdBy, int countryId) {
-        setDivisionId(divisionId);
-        setDivisionName(divisionName);
-        setCreateDate(createDate);
-        setCreatedBy(createdBy);
-        setCountryId(countryId);
-        for (Country c : DBCountries.getAllCountries()) {
-            if (countryId == c.getCountryId()) {
-                country = c;
-            }
-        }
-    }
-
-    public Division(int divisionId, String divisionName, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy, int countryId) {
-        setDivisionId(divisionId);
-        setDivisionName(divisionName);
-        setCreateDate(createDate);
-        setCreatedBy(createdBy);
-        setLastUpdate(lastUpdate);
-        setLastUpdatedBy(lastUpdatedBy);
-        setCountryId(countryId);
-    }
-
+    /** Constructor for instantiating Division objects.
+     * This method pulls all of the Countries from the database and then loops through them in order to assign a Country
+     * object that matches the countryId.
+     * @param divisionId Division ID as an int.
+     * @param divisionName Division name as a string.
+     * @param countryId Country ID as an int.
+     * */
     public Division(int divisionId, String divisionName, int countryId) {
         setDivisionId(divisionId);
         setDivisionName(divisionName);
@@ -50,23 +37,29 @@ public class Division {
         }
     }
 
+    /** Sets the DivisionId instance variable.
+     * @param divisionId divisionId as an int. */
     public void setDivisionId(int divisionId) { this.divisionId = divisionId; }
+    /** Sets the divisionName instance variable.
+     * @param divisionName divisionName as a string */
     public void setDivisionName(String divisionName) { this.divisionName = divisionName; }
-    public void setCreateDate(LocalDateTime createDate) { this.createDate = createDate; }
-    public void setCreatedBy(String createdBy) { this.createdBy = createdBy; }
-    public void setLastUpdate(LocalDateTime lastUpdate) { this.lastUpdate = lastUpdate; }
-    public void setLastUpdatedBy(String lastUpdatedBy) { this.lastUpdatedBy = lastUpdatedBy; }
+    /** Sets the CountryId instance variable.
+     * @param countryId countryId as an int. */
     public void setCountryId(int countryId) { this.countryId = countryId; }
 
+    /** Method returns the divisionId field.
+     *  @return divisionId as an int. */
     public int getDivisionId() { return divisionId; }
+    /** Method returns the divisionNamefield.
+     *  @return divisionName as an string. */
     public String getDivisionName() { return divisionName; }
-    public LocalDateTime getCreateDate() { return createDate; }
-    public String getCreatedBy() { return createdBy; }
-    public LocalDateTime getLastUpdate() { return lastUpdate; }
-    public String getLastUpdatedBy() { return lastUpdatedBy; }
     public int getCountryId() { return countryId; }
+    /** Method returns the country field
+     * @return country as a Country object. */
     public Country getCountry() { return country; }
 
+    /** Method overrides the inherited toString() method to return the divisionName field. */
+    @Override
     public String toString() {
         return getDivisionName();
     }

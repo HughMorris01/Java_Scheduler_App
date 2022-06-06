@@ -1,22 +1,12 @@
 package main;
 
-import com.mysql.cj.result.LocalTimeValueFactory;
 import controller.MainScreenController;
-import database.DBCountries;
 import database.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Country;
-
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
 
 /**
  * This class creates an appointment management application that interfaces with a MySQL database.
@@ -26,7 +16,11 @@ import java.util.*;
  * @version 1.0
  */
 public class Main extends Application {
-    
+
+    /** This method starts the appointment management application and loads the MainScreen FXML screen.
+     * @throws Exception FXMLLoader.load() will throw and exception if it cannot locate the FXML document.
+     * @param stage The initial stage for loading the first scene.
+     * */
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainScreen.fxml"));
@@ -36,6 +30,10 @@ public class Main extends Application {
         stage.show();
     }
 
+    /** The Javadoc folder is located in the main directory, "/Assessment_Project/Javadoc".
+     *  This is the main method that begins the program.
+     * @param args command-line arguments.
+     * */
     public static void main(String[] args) {
         JDBC.openConnection();
         /* ZonedDateTime localTime0 = ZonedDateTime.now();

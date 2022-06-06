@@ -10,21 +10,27 @@ import java.sql.DriverManager;
  * @version 1.0
  */
 public abstract class JDBC {
+    /** String for database protocol. */
     private static final String protocol = "jdbc";
+    /** String for database vendor. */
     private static final String vendor = ":mysql:";
+    /** String for database address. */
     private static final String location = "//localhost/";
+    /** String for database name. */
     private static final String databaseName = "client_schedule";
+    /** String for full URL. */
     private static final String jdbcUrl = protocol + vendor + location + databaseName + "?connectionTimeZone = SERVER"; // LOCAL
-    private static final String driver = "com.mysql.cj.jdbc.Driver"; // Driver reference
-    private static final String userName = "sqlUser"; // Username
-    private static String password = "Passw0rd!"; // Password
-    private static Connection connection;  // Connection Interface
+    /** String for driver reference. */
+    private static final String driver = "com.mysql.cj.jdbc.Driver";
+    /** String for database username. */
+    private static final String userName = "sqlUser";
+    /** String for database password. */
+    final private static String password = "Passw0rd!";
+    /** Connection interface object. */
+    private static Connection connection;
 
-    /**
-     * Static method uses the driver, database url and login variables to establish a connection with the database.
-     * */
-    public static void openConnection()
-    {
+    /** Static method uses the driver, database url and login variables to establish a connection with the database. */
+    public static void openConnection() {
         try {
             Class.forName(driver); // Locate Driver
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // Reference Connection object
@@ -37,16 +43,10 @@ public abstract class JDBC {
         }
     }
 
-    /**
-     * Static method that returns the Connection object created by openConnection().
-     * */
-    public static Connection getConnection() {
-        return connection;
-    }
+    /** Static method that returns the Connection object created by openConnection(). */
+    public static Connection getConnection() { return connection; }
 
-    /**
-     * Static method that closes the connection established by openConnection().
-     * */
+    /** Static method that closes the connection established by openConnection(). */
     public static void closeConnection() {
         try {
             connection.close();

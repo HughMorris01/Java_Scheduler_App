@@ -6,7 +6,10 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddModifyCustomerScreenController">
    <children>
-      <Label fx:id="screenLabel" layoutX="260.0" layoutY="24.0" prefHeight="20.0" prefWidth="100.0" text="Label" />
+      <Label fx:id="screenLabel" layoutX="167.0" layoutY="24.0" prefHeight="27.0" prefWidth="185.0" text="Enter Customer Info">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
       <Label layoutX="71.0" layoutY="68.0" text="Customer ID:">
          <font>
             <Font name="System Bold" size="12.0" />

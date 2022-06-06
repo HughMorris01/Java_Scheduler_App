@@ -3,26 +3,20 @@ package database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Contact;
-import model.Customer;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/** This class is for manipulating the Contact table data in the database and not mean to be instantiated.
+ * The class contains one method to return all Contact data as an ObservableList of Contact objects.
+ * @author Gregory Farrell
+ * @version 1.0
+ */
 public class DBContacts {
-    public static int contactId = 3;
 
-    public static int insertContact(String name, String email) throws SQLException {
-
-        String sqlCommand = "INSERT INTO contacts (Contact_Name, Email) VALUES (?, ?)";
-        PreparedStatement ps = JDBC.getConnection().prepareStatement(sqlCommand);
-        ps.setString(1, name);
-        ps.setString(2, email);
-        int rowsAffected = ps.executeUpdate();
-        contactId++;
-        return rowsAffected;
-    }
-
+    /** This method is used to return all of the Contact records in the database as an ObserveableList of Contact objects.
+     * @return An ObservableList of Contact objects.
+     * */
     public static ObservableList<Contact> getAllContacts() {
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();
         try {
