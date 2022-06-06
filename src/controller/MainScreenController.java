@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.javafx.stage.StageHelper;
 import database.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,11 +18,8 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import main.Main;
 import model.User;
-
-
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -47,18 +43,25 @@ public class MainScreenController implements Initializable {
     private static Locale userLocale;
     private static LocalDateTime loginTime;
     private static User user;
-    private static String errorMessage1 = "The Username and Password Do Not Match Our Records, Please Try Again.";
+    private static String errorMessage1 = "The username and password entered do not match our records, please try again.";
     private static String blankField = "Blank Field";
     private static String invalidLogin = "Invalid Login Attempt";
     private static String blankAlert1 = "A Username Must be Entered.";
     private static String blankAlert2 = "A Password Must be Entered.";
-
-
-
+    private static int loginCounter = 1;
+    private static boolean loginSuccess = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         checkLocale();
+        try {
+            //PrintWriter pw = new PrintWriter("login_activity.txt");
+            FileWriter fw = new FileWriter("login_activity.txt");
+            fw.flush();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         LEInterface lambdaRequirement = customerId -> {
             return DBAppointments.getAppointmentsByCustomerId(customerId);
@@ -84,6 +87,20 @@ public class MainScreenController implements Initializable {
             blankAlert2 = rb.getString("blankAlert2");
         }
         else { userLocaleData.setText(userLocale.getDisplayCountry()); }
+    }
+
+    public void recordLoginAttempt() throws IOException {
+        FileWriter fileWriter = new FileWriter("login_activity.txt", true);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        String enteredUsername = userIdTextField.getText();
+        String enteredPassword = passwordTextField.getText();
+        LocalDateTime loginLDT = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("M/d/yy h:mma");
+        String loginLDTString = dtf.format(loginLDT);
+        printWriter.println("Login Attempt #" + loginCounter + " - " + loginLDTString + "\nUsername Entered: \"" + enteredUsername
+                + "\" | Password Entered: \"" + enteredPassword + "\" | Successful: " + loginSuccess +"\n");
+        loginCounter += 1;
+        printWriter.close();
     }
 
     public void loginValidation(ActionEvent actionEvent) {
@@ -112,21 +129,31 @@ public class MainScreenController implements Initializable {
                 if(u.getUserName().equals(enteredName) && u.getUserPassword().equals(enteredPassword)) {
                     loginTime = LocalDateTime.now();
                     user = u;
+                    loginSuccess = true;
+
+                    try {
+                        recordLoginAttempt();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     Parent root = FXMLLoader.load(getClass().getResource("/view/UserHomeScreen.fxml"));
                     Stage stage = (Stage) ((Node) (actionEvent.getSource())).getScene().getWindow();
                     Scene scene = new Scene(root, 500, 500);
                     stage.setScene(scene);
                     stage.setTitle("User Home Screen");
+
                     return;
                 }
             }
                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(invalidLogin);
-                alert.setContentText(errorMessage1);
-                alert.show();
-                userIdTextField.clear();
-                passwordTextField.clear();
+               alert.setTitle(invalidLogin);
+               alert.setContentText(errorMessage1);
+               alert.show();
+
+               recordLoginAttempt();
+               userIdTextField.clear();
+               passwordTextField.clear();
         }
         catch (Exception exception) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter valid values in the input fields");

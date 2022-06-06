@@ -1,0 +1,3 @@
+Login Attempt #1 - 6/5/22 8:43PM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
