@@ -13,7 +13,7 @@ import java.sql.SQLException;
  * @version 1.0
  */
 public class DBUsers {
-    /** This method return all of the records in the User table of the database.
+    /** This method returns all records in the User table of the database.
      * @return An ObservableList of User objects.
      * */
     public static ObservableList<User> getAllUsers() {

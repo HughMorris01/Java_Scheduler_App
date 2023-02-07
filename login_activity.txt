@@ -1,3 +1,68 @@
-Login Attempt #1 - 6/6/22 4:00PM
+
+
+Login Attempt #2 - 6/9/22 12:16PM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
+Login Attempt #1 - 11/21/22 6:12PM
+Username Entered: "admin" | Password Entered: "password" | Successful: false
+
+Login Attempt #2 - 11/21/22 6:14PM
+Username Entered: "admin" | Password Entered: "admin" | Successful: true
+
+Login Attempt #1 - 11/21/22 6:30PM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
+Login Attempt #1 - 11/21/22 6:40PM
+Username Entered: "admin" | Password Entered: "admin" | Successful: true
+
+Login Attempt #1 - 11/22/22 2:18AM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
+Login Attempt #1 - 11/23/22 2:50PM
+Username Entered: "admin" | Password Entered: "admin" | Successful: true
+
+Login Attempt #1 - 12/2/22 3:22PM
+Username Entered: "admin" | Password Entered: "admin" | Successful: true
+
+Login Attempt #1 - 12/6/22 1:58PM
+Username Entered: "admin" | Password Entered: "admin" | Successful: true
+
+Login Attempt #1 - 12/6/22 4:06PM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
+Login Attempt #1 - 1/6/23 10:14AM
+Username Entered: "admin" | Password Entered: "admin" | Successful: true
+
+Login Attempt #1 - 1/20/23 4:09PM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
+Login Attempt #1 - 1/20/23 9:58PM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
+Login Attempt #1 - 1/20/23 11:11PM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
+Login Attempt #1 - 1/20/23 11:25PM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
+Login Attempt #1 - 1/20/23 11:26PM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
+Login Attempt #1 - 1/21/23 9:26AM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
+Login Attempt #1 - 1/22/23 10:10PM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
+Login Attempt #1 - 1/23/23 5:45PM
+Username Entered: "test" | Password Entered: "test" | Successful: true
+
+Login Attempt #1 - 1/24/23 6:25PM
+Username Entered: "admin" | Password Entered: "Passw0rd!" | Successful: false
+
+Login Attempt #2 - 1/24/23 6:25PM
+Username Entered: "admin" | Password Entered: "Passw0rd!" | Successful: false
+
+Login Attempt #1 - 1/24/23 8:53PM
 Username Entered: "test" | Password Entered: "test" | Successful: true
 

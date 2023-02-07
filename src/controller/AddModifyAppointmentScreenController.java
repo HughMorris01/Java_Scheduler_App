@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Appointment;
 import model.Contact;
@@ -461,4 +462,6 @@ public class AddModifyAppointmentScreenController implements Initializable {
         stage.setScene(scene);
         stage.setTitle("Appointment Screen");
     }
+
+    FileChooser fileChooser;
 }

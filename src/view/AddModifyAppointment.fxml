@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -36,5 +38,13 @@
       <ComboBox fx:id="endTimeComboBox" disable="true" layoutX="175.0" layoutY="190.0" prefHeight="26.0" prefWidth="122.0" promptText="Select End" />
       <DatePicker fx:id="datePickerComboBox" editable="false" layoutX="175.0" layoutY="120.0" />
       <ComboBox fx:id="typeComboBox" layoutX="175.0" layoutY="329.0" prefHeight="26.0" prefWidth="162.0" />
+      <ImageView fitHeight="268.0" fitWidth="398.0" layoutX="113.0" layoutY="140.0" opacity="0.38" pickOnBounds="true" preserveRatio="true" scaleZ="0.0">
+         <image>
+            <Image url="@../Water_Background.jpg" />
+         </image>
+      </ImageView>
    </children>
+   <opaqueInsets>
+      <Insets top="5.0" />
+   </opaqueInsets>
 </AnchorPane>

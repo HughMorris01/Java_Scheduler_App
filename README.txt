@@ -17,5 +17,5 @@ the user is able to navigate either the Customer or the Appointment interfaces, 
 customers and associated appointments. Additionally, the appointments can be filtered several different ways and the application
 provides a couple reporting functions.
 
-A3f Report: The third report gives the user a total of all appointments existing in the datebase for a selected location
+A3f Report: The third report gives the user a total of all appointments existing in the database for a selected location
 and month.

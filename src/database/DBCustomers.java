@@ -2,6 +2,7 @@ package database;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 import model.Customer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
