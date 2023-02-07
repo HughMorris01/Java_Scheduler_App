@@ -161,7 +161,6 @@ public class AppointmentScreenController implements Initializable {
     /** This method is an event handler on the Monthly Schedule radio button.
      * When clicked, the table will repopulate with only Appointments occurring within the next 30 days.
      * @param actionEvent Passed from the On Action event listener on Monthly Schedule radio button.
-     * @throws SQLException Exception gets thrown if the SQL code does not compute properly.
      * */
     public void loadMonthlySchedule(ActionEvent actionEvent) {
         appointmentsTable.setItems(DBAppointments.getAppointmentsByMonth());

@@ -13,9 +13,11 @@ import java.sql.SQLException;
  * @version 1.0
  */
 public class DBFirst_Level_Divisions {
-
+    /** Static ObservableList of all US divisions that can be accessed throughout the application. */
     public static ObservableList<Division> uSDivisionsList = FXCollections.observableArrayList();
+    /** Static ObservableList of all UK divisions that can be accessed throughout the application. */
     public static ObservableList<Division> uKDivisionsList = FXCollections.observableArrayList();
+    /** Static ObservableList of all Canadian divisions that can be accessed throughout the application. */
     public static ObservableList<Division> canadaDivisionsList = FXCollections.observableArrayList();
 
     /** This method return all of the records in the First_Level_Division table of the database.
@@ -43,8 +45,7 @@ public class DBFirst_Level_Divisions {
         }
         return allDivisionsList;
     }
-    /** This method return all of the US Division records in the First_Level_Division table of the database.
-     * @return An ObservableList of Division objects.
+    /** This method sets the static uSDivisionList field so that it can be accessed throughout the application.
      * */
     public static void getUSDivisions() {
         uSDivisionsList.clear();
@@ -67,8 +68,7 @@ public class DBFirst_Level_Divisions {
             e.printStackTrace();
         }
     }
-    /** This method return all of the UK Division records in the First_Level_Division table of the database.
-     * @return An ObservableList of Division objects.
+    /** This method sets the static uKDivisionList field so that it can be accessed throughout the application.
      * */
     public static void getUKDivisions() {
         uKDivisionsList.clear();
@@ -91,8 +91,7 @@ public class DBFirst_Level_Divisions {
             e.printStackTrace();
         }
     }
-    /** This method return all of the Canadian Division records in the First_Level_Division table of the database.
-     * @return An ObservableList of Division objects.
+    /** This method sets the static canadaDivisionList field so that it can be accessed throughout the application.
      * */
     public static void getCanadaDivisions() {
         canadaDivisionsList.clear();

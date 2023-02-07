@@ -358,6 +358,7 @@ public abstract class DBAppointments {
      * @param customerId as an int.
      * @param contactId as an int.
      * @param userId as an int.
+     * @param appointmentId as an int.
      * @throws SQLException Throws a SQLException if the SQL does not execute properly.
      * */
     public static void updateAppointment(String title, String description, String location, String type, Timestamp start, Timestamp end, int customerId, int contactId, int userId, int appointmentId) throws SQLException {

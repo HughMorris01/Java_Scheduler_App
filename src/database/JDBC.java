@@ -47,7 +47,8 @@ public abstract class JDBC {
         }
     }
 
-    /** Static method that returns the Connection object created by openConnection(). */
+    /** Static method that returns the Connection object created by openConnection().
+     * @return connection as a Connection object. */
     public static Connection getConnection() { return connection; }
 
     /** Static method that closes the connection established by openConnection(). */

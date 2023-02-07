@@ -50,9 +50,11 @@ public class Division {
     /** Method returns the divisionId field.
      *  @return divisionId as an int. */
     public int getDivisionId() { return divisionId; }
-    /** Method returns the divisionNamefield.
-     *  @return divisionName as an string. */
+    /** Method returns the divisionName field.
+     *  @return divisionName as a string. */
     public String getDivisionName() { return divisionName; }
+    /** Method returns the countryId field.
+     *  @return countryId as an int. */
     public int getCountryId() { return countryId; }
     /** Method returns the country field
      * @return country as a Country object. */

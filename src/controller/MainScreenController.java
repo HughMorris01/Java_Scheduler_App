@@ -19,10 +19,8 @@ import model.User;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 /** This is the controller class for the MainScreen.fxml document and is not meant to be instantiated.
@@ -36,13 +34,13 @@ public class MainScreenController implements Initializable {
     public TextField userIdTextField;
     /** User Password text field */
     public TextField passwordTextField;
-    /** Password label */
+    /** Label pointing to the password text field. */
     public Label passwordLabel;
-    /** User ID label */
+    /** Label pointing to the user ID text field. */
     public Label userIdLabel;
     /** Login button */
     public Button loginButton;
-    /** User locale label label */
+    /** Label pointing to the User locale data. */
     public Label userLocaleLabel;
     /** Label that displays the User's locale */
     public Label userLocaleData;
@@ -52,15 +50,10 @@ public class MainScreenController implements Initializable {
     private static LocalDateTime loginTime;
     /** User that is created upon login authentication */
     private static User user;
-    /** Error message displayed if login attempt fails */
     private static String errorMessage1 = "The username and password entered do not match our records, please try again.";
-    /** Error message title if no username or password is entered. */
     private static String blankField = "Blank Field";
-    /** Error message title if login attempt fails. */
     private static String invalidLogin = "Invalid Login Attempt";
-    /** Error message displayed if no username is entered. */
     private static String blankAlert1 = "A Username Must be Entered.";
-    /** Error message displayed if no password is entered. */
     private static String blankAlert2 = "A Password Must be Entered.";
     /** Counter to track and record the number of login attempts. */
     private static int loginCounter = 1;
@@ -78,7 +71,7 @@ public class MainScreenController implements Initializable {
 
         lambdaRequirement1.checkLocale();
 
-        //lambdaRequirement2.flushTxtFile("login_activity.txt");
+        lambdaRequirement2.flushTxtFile("login_activity.txt");
     }
 
     /** This is the lambda expression that flushes the login_activity.txt file. This is necessary so that the file is
@@ -106,14 +99,14 @@ public class MainScreenController implements Initializable {
             loginButton.setText(rb.getString("login"));
             loginButton.setPrefWidth(110);
             userLocaleLabel.setText(rb.getString("locale"));
-            userLocaleData.setText(ZoneId.systemDefault().getId());
+            userLocaleData.setText(rb.getString("france"));
             errorMessage1 = rb.getString("errorMessage1");
             blankField = rb.getString("blankField");
             invalidLogin = rb.getString("invalidLogin");
             blankAlert1 = rb.getString("blankAlert1");
             blankAlert2 = rb.getString("blankAlert2");
         }
-        else { userLocaleData.setText(ZoneId.systemDefault().getId()); }
+        else { userLocaleData.setText(userLocale.getDisplayCountry()); }
     };
 
     /** This method records data each time a login is attempted. The characters entered for the username and password, as
@@ -173,7 +166,7 @@ public class MainScreenController implements Initializable {
                         e.printStackTrace();
                     }
 
-                    Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/UserHomeScreen.fxml")));
+                    Parent root = FXMLLoader.load(getClass().getResource("/view/UserHomeScreen.fxml"));
                     Stage stage = (Stage) ((Node) (actionEvent.getSource())).getScene().getWindow();
                     Scene scene = new Scene(root, 500, 500);
                     stage.setScene(scene);
@@ -199,8 +192,13 @@ public class MainScreenController implements Initializable {
         }
     }
 
-    // Getter functions
+    /** Method returns the User's Locale.
+     * @return  userLocale as a Locale object*/
     public static Locale getUserLocale() { return userLocale;}
+    /** Method returns a timestamp of the login time.
+     * @return  loginTime as a LocaleDateTime object*/
     public static LocalDateTime getLoginTime() { return loginTime; }
+    /** Method returns the User object.
+     * @return  user as a User object*/
     public static User getUser() { return user; }
 }

@@ -50,6 +50,7 @@ public class AddModifyCustomerScreenController implements Initializable {
     public ComboBox<Country> countryComboBox;
     /** ComboBox used to select the Customer's Division. */
     public ComboBox<Division> divisionComboBox;
+    /** An ObservableList of all of the Country objects. */
     public ObservableList<Country> localCountryList;
     /** Button that saves the Customer info to the database. */
     public Button submitButton;

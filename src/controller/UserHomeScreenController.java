@@ -159,7 +159,6 @@ public class UserHomeScreenController implements Initializable {
     /** This method is an event handler on the top Calculate button.
      * When clicked, the button runs the report for the chosen criteria.
      * @param actionEvent Passed from the On Action event listener on the top Calculate button.
-     * @throws IOException Exception gets thrown if load() cannot locate the FXML file
      * */
     public void onSubmit(ActionEvent actionEvent) {
         Month selectedMonth = monthComboBox.getSelectionModel().getSelectedItem();
@@ -185,7 +184,6 @@ public class UserHomeScreenController implements Initializable {
     /** This method is an event handler on the bottom Calculate button.
      * When clicked, the button runs the report for the chosen criteria.
      * @param actionEvent Passed from the On Action event listener on the bottom Calculate button.
-     * @throws IOException Exception gets thrown if load() cannot locate the FXML file
      * */
     public void onSubmit2(ActionEvent actionEvent) {
         Month selectedMonth = monthComboBox2.getSelectionModel().getSelectedItem();
