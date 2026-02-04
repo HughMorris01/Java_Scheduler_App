@@ -1,62 +1,58 @@
-Appointment Organizer Plus+
-A professional-grade desktop GUI application designed to streamline customer relationship management and appointment scheduling. This system leverages a MySQL backend to provide a persistent, scalable solution for maintaining complex business schedules across multiple time zones.
+# 📅 Client Schedule App (JavaFX)
 
-🛠 Tech Stack
-Language: Java 17
+A comprehensive GUI-based scheduling application designed to manage customer appointments across multiple time zones. This desktop application features a multi-lingual login interface, automated time-zone conversions, and robust input validation.
 
-GUI Framework: JavaFX 17.0.2
+![App Showcase](scheduler_showcase.png)
 
-Database: MySQL (Connector/J 8.0.25)
+## 🚀 Key Features
+* **Time Zone Awareness:** Automatically converts appointment times between the database (UTC), the user's local system time, and the company's business hours (EST) to prevent scheduling conflicts.
+* **Localization (I18N):** Detects the user's system language (English/French) and translates the login interface and error messages automatically using Resource Bundles.
+* **Reporting Dashboard:** Generates dynamic reports for appointment totals by type/month and schedules for individual contacts.
+* **Input Validation:** Prevents overlapping appointments and ensures data integrity before writing to the database.
 
-Architecture: MVC (Model-View-Controller)
+## 🛠 Tech Stack
+* **Language:** Java 17
+* **GUI Framework:** JavaFX (Modular SDK)
+* **Database:** MySQL 8.0
+* **Build Tool:** Maven
+* **ORM:** JDBC (Direct SQL connectivity)
 
-IDE: IntelliJ IDEA 2021.2.2
+## ⚙️ How to Run This Project
 
-🚀 Key Features
-Secure Access Control: Implements a localized login system requiring database-authenticated credentials.
+### Prerequisites
+* **Java JDK 17** or higher
+* **MySQL Server** (Running on localhost:3306)
+* **Maven** (Integrated into IntelliJ IDEA)
 
-Comprehensive CRUD Engine: Robust interfaces for adding, modifying, and deleting both Customer profiles and their associated Appointments.
+### 1. Database Setup
+This application requires a local MySQL database.
+1.  Open your MySQL client (Workbench, Command Line, etc.).
+2.  Run the provided script: `client_schedule.sql` (located in the root folder).
+    * *This script creates the `client_schedule` database, tables, and populates dummy data.*
+3.  **Default Database Configuration:**
+    * The app is configured to connect with User: `root` and Password: `root`.
+    * *Note: If your local MySQL password differs, update the credentials in `src/main/java/database/JDBC.java` before running.*
 
-Dynamic Scheduling Views: Built-in filtering capabilities allowing users to toggle between weekly and monthly appointment views.
+### 2. Launching the App
+1.  Clone the repository and open in **IntelliJ IDEA**.
+2.  Let Maven download dependencies (Auto-sync).
+3.  **Build the Project:** Open the Maven sidebar, run `clean`, then `install`.
+4.  **Run:** Execute the `Launcher.java` file (located in `src/main/java/main`).
 
-Business Intelligence Reporting: * Location Performance: Generates totals of appointments categorized by location and month.
+### 3. Login Credentials
+Once the app launches, use the following test credentials:
+* **Username:** `test`
+* **Password:** `test`
 
-Strategic Insights: Custom reporting functions designed to provide organizational snapshots of customer activity.
+## 🧠 Technical Highlights
 
-🌐 Technical Challenges & Solutions
-1. Multi-Region Time Zone Management
-Challenge: The application must be usable by clients in different geographical regions (e.g., EST, GMT, MST) while maintaining a consistent schedule in the database. Solution:
+### Lambda Expressions
+This project utilizes lambda expressions to improve code readability and efficiency.
+* **Time Management:** Used for cleaner filtering of appointment times against business hours.
+* **Alert Handling:** Simplified the code required to trigger popup alerts for validation errors.
 
-Database Normalization: All appointment timestamps are converted to UTC (Coordinated Universal Time) before being stored in the MySQL database.
+### Multithreading Note
+Database operations are handled via standard JDBC calls. While this version runs on the main thread for simplicity (typical for academic requirements), a production version would utilize `Task<T>` or `CompletableFuture` to prevent UI freezing during queries.
 
-Dynamic Conversion: I utilized the Java ZonedDateTime and ZoneId classes to detect the user's local system time at login. All database records are converted from UTC to the user's local time on the fly for display in the UI.
-
-Business Logic: Implemented a validation layer that checks appointment times against a "Company EST" schedule (8am - 10pm EST), regardless of the user's local time zone.
-
-2. Localization (i18n) & Internationalization
-Challenge: The application required seamless switching between English and French based on the user's system language settings. Solution:
-
-Resource Bundles: Leveraged java.util.ResourceBundle to separate UI string literals from the code logic. Created parallel .properties files for English and French.
-
-Locale Detection: The application automatically initializes the Locale.getDefault() method at launch. If the system language is French, the login form and error messages automatically render in French.
-
-3. Functional Interface Implementation
-Challenge: Reducing boilerplate code for repetitive UI tasks and improving code maintainability. Solution:
-
-Lambdas: Defined custom functional interfaces to handle alert message generation. This simplified the controller logic and improved code readability by replacing verbose anonymous inner classes with concise lambda expressions.
-
-📁 Project Structure
-src/: Contains the FXML layouts, Java controllers, and Data Access Objects (DAO).
-
-JavaDocs/: Full technical documentation for the application's classes and methods.
-
-Database ERD.pdf: Detailed Entity Relationship Diagram showing the database schema and relational mapping.
-
-⚙️ Installation & Usage
-Clone the Repository:
-
-Bash
-git clone https://github.com/HughMorris01/C195_Java_Scheduler_App.git
-Database Configuration: Ensure a MySQL instance is running and update the connection parameters in the source code to point to your specific database host.
-
-Authentication: Launch the application and enter valid user credentials to access the management dashboard.
+---
+*Created as part of the WGU Software II (C195) curriculum.*
